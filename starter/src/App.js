@@ -26,9 +26,11 @@ function App() {
   }, []);
 
   const updateBooksState = (updatedBook) => {
+    //trigger re-render and update backend
     setBooksUpdated((oldState) => !oldState);
-    //trigger re-render
-    //update backend of book
+        
+    BooksAPI.update(updatedBook, updatedBook.shelf)
+    .then((res) => console.log(res))
   };
 
   // console.log("all books");
