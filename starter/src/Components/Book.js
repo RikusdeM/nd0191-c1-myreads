@@ -1,7 +1,7 @@
 import BookSelector from "./BookSelector";
 
 const Book = ({ book }) => {
-  console.log(book.authors);
+  console.log("book: " + JSON.stringify(book));
   return (
     <div className="book">
       <div className="book-top">

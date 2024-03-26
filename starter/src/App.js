@@ -3,13 +3,10 @@ import { useState } from "react";
 import SearchPage from "./Components/SearchPage";
 import Book from "./Components/Book";
 import Bookshelf from "./Components/BookShelf";
+import { Route, Routes, useNavigate, Link } from "react-router-dom";
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-
-  const toggleSetShowSearchPage = () => {
-    setShowSearchpage(!showSearchPage);
-  };
+  let navigate = useNavigate();
 
   const toKillAMockingBirdBook = {
     title: "To Kill a Mockingbird",
@@ -55,25 +52,36 @@ function App() {
 
   return (
     <div className="app">
-      {showSearchPage ? (
-        <SearchPage setShowSearchPage={toggleSetShowSearchPage} />
-      ) : (
-        <div className="list-books">
-          <div className="list-books-title">
-            <h1>MyReads</h1>
-          </div>
-          <div className="list-books-content">
-            <div>              
-              <Bookshelf title={"Currently Reading"} books={[toKillAMockingBirdBook, endersGame]}/>
-              <Bookshelf title={"Want to Read"} books={[sewenteenSewentySix, harryPotter]}/>
-              <Bookshelf title={"Read"} books={[theHobbit, seuss, tom]}/>              
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={
+            <div className="list-books">
+              <div className="list-books-title">
+                <h1>MyReads</h1>
+              </div>
+              <div className="list-books-content">
+                <div>
+                  <Bookshelf
+                    title={"Currently Reading"}
+                    books={[toKillAMockingBirdBook, endersGame]}
+                  />
+                  <Bookshelf
+                    title={"Want to Read"}
+                    books={[sewenteenSewentySix, harryPotter]}
+                  />
+                  <Bookshelf title={"Read"} books={[theHobbit, seuss, tom]} />
+                </div>
+              </div>
+              <div className="open-search">
+                <Link to={{ pathname: "/addBook" }}>Add a book</Link>
+              </div>
             </div>
-          </div>
-          <div className="open-search">
-            <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-          </div>
-        </div>
-      )}
+          }
+        />
+        <Route exact path="/addBook" element={<SearchPage />} />
+      </Routes>
     </div>
   );
 }
