@@ -1,18 +1,22 @@
 import BookSelector from "./BookSelector";
+import PropTypes from "prop-types";
 
-const Book = ({ book }) => {
+const Book = ({ book, updateShelf }) => {
   // console.log("book: " + JSON.stringify(book));
   const imageLink = () => {
-  try {
-    if (book.imageLinks.thumbnail) {      
-      return (
-        book.imageLinks.thumbnail
-      )
+    try {
+      if (book.imageLinks.thumbnail) {
+        return book.imageLinks.thumbnail;
+      }
+    } catch {
+      return "";
     }
-  } catch {
-    return ("")
+  };
+
+  const updateBook = (category) => {    
+    book.shelf = category //pointer operation    
+    updateShelf(book)
   }
-}
 
   return (
     <div className="book">
@@ -21,22 +25,30 @@ const Book = ({ book }) => {
           className="book-cover"
           style={{
             width: 128,
-            height: 193,            
+            height: 193,
             backgroundImage: `url(${imageLink()})`,
           }}
         ></div>
-        <div className="book-shelf-changer">
-          <BookSelector />
-        </div>
+        <BookSelector shelf={book.shelf} updateBookCategory={updateBook} />
       </div>
       <div className="book-title">{book.title}</div>
       <div className="book-authors">
         {book.authors.length > 1
-          ? book.authors.map((author) => `${author}, `)
+          ? book.authors.map((author, index) => {
+              if (index !== book.authors.length - 1) {
+                return `${author}; `;
+              } else {
+                return `${author}`;
+              }
+            })
           : book.authors}
       </div>
     </div>
   );
 };
+
+// Book.propTypes = {
+//   book: PropTypes.array.isRequired,  
+// };
 
 export default Book;

@@ -6,16 +6,18 @@ import Bookshelf from "./Components/BookShelf";
 import * as BooksAPI from "./BooksAPI";
 import { Route, Routes, useNavigate, Link } from "react-router-dom";
 
+export const bookCategories = {
+  READ: "read",
+  WANTTOREAD: "wantToRead",
+  CURRENTLYREADING: "currentlyReading",
+  NONE: "none",
+};
+
 function App() {
   let navigate = useNavigate();
 
   const [books, setBooks] = useState([{}]);
-
-  const bookCatagories = {
-    READ: "read",
-    WANTTOREAD: "wantToRead",
-    CURRENTLYREADING: "currentlyReading",
-  };
+  const [booksUpdated, setBooksUpdated] = useState(false);
 
   useEffect(() => {
     BooksAPI.getAll()
@@ -23,7 +25,14 @@ function App() {
       .finally(() => console.log("Books have been loaded into state"));
   }, []);
 
-  books.map((book) => console.log(book));
+  const updateBooksState = (updatedBook) => {
+    setBooksUpdated((oldState) => !oldState);
+    //trigger re-render
+    //update backend of book
+  };
+
+  // console.log("all books");
+  // books.map((book) => console.log(book));
 
   return (
     <div className="app">
@@ -41,20 +50,23 @@ function App() {
                   <Bookshelf
                     title={"Currently Reading"}
                     books={books.filter(
-                      (book) => book.shelf === bookCatagories.CURRENTLYREADING
+                      (book) => book.shelf === bookCategories.CURRENTLYREADING
                     )}
+                    updateBooksCollection={updateBooksState}
                   />
                   <Bookshelf
                     title={"Want to Read"}
                     books={books.filter(
-                      (book) => book.shelf === bookCatagories.WANTTOREAD
+                      (book) => book.shelf === bookCategories.WANTTOREAD
                     )}
+                    updateBooksCollection={updateBooksState}
                   />
                   <Bookshelf
                     title={"Read"}
                     books={books.filter(
-                      (book) => book.shelf === bookCatagories.READ
+                      (book) => book.shelf === bookCategories.READ
                     )}
+                    updateBooksCollection={updateBooksState}
                   />
                 </div>
               </div>
