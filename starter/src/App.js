@@ -44,8 +44,8 @@ function App() {
     updateBookBackend(updatedBook);
   };
 
-  // console.log("all books");
-  // console.log(books);
+  console.log("all books");
+  console.log(books);
 
   return (
     <div className="app">

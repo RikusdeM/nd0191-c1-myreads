@@ -15,9 +15,9 @@ const Book = ({ book, updateShelf }) => {
   };
 
   const updateBook = (category) => {
-    console.log("update with " + category)
-    console.log("book")
-    console.log(book)
+    console.log("update with " + category);
+    console.log("book");
+    console.log(book);
     book.shelf = category; //pointer operation
     updateShelf(book);
   };
@@ -29,7 +29,7 @@ const Book = ({ book, updateShelf }) => {
   const bookAuthor = (book) => {
     try {
       if (book.authors.length > 1) {
-        book.authors.map((author, index) => {
+        return book.authors.map((author, index) => {
           if (index !== book.authors.length - 1) {
             return `${author}; `;
           } else {
