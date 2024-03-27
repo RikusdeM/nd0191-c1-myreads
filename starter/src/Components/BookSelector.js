@@ -1,7 +1,11 @@
+import { useEffect, useState } from "react";
 import { bookCategories } from "../App";
 
 const BookSelector = ({ shelf, updateBookCategory }) => {
+  const [shelfState, setShelfState] = useState("");
+
   const onCategoryChange = (category) => {
+    setShelfState(category);
     updateBookCategory(category);
   };
 
@@ -9,7 +13,7 @@ const BookSelector = ({ shelf, updateBookCategory }) => {
     <div className="book-shelf-changer">
       <select
         name="bookshelfSelector"
-        value={shelf}
+        value={shelfState === "" ? shelf : shelfState}
         defaultChecked={true}
         onChange={(e) => onCategoryChange(e.target.value)}
       >

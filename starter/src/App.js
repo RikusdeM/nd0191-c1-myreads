@@ -1,7 +1,6 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import SearchPage from "./Components/SearchPage";
-import Book from "./Components/Book";
 import Bookshelf from "./Components/BookShelf";
 import * as BooksAPI from "./BooksAPI";
 import { Route, Routes, useNavigate, Link } from "react-router-dom";
@@ -26,11 +25,12 @@ function App() {
   }, []);
 
   const updateBooksState = (updatedBook) => {
-    //trigger re-render and update backend
+    //trigger re-render
     setBooksUpdated((oldState) => !oldState);
-        
-    BooksAPI.update(updatedBook, updatedBook.shelf)
-    .then((res) => console.log(res))
+    //update backend
+    BooksAPI.update(updatedBook, updatedBook.shelf).then((res) =>
+      console.log(res)
+    );
   };
 
   // console.log("all books");
@@ -78,7 +78,7 @@ function App() {
             </div>
           }
         />
-        <Route exact path="/addBook" element={<SearchPage />} />
+        <Route exact path="/addBook" element={<SearchPage booksInShelf={books} />} />
       </Routes>
     </div>
   );

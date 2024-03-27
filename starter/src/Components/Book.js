@@ -15,6 +15,9 @@ const Book = ({ book, updateShelf }) => {
   };
 
   const updateBook = (category) => {
+    console.log("update with " + category)
+    console.log("book")
+    console.log(book)
     book.shelf = category; //pointer operation
     updateShelf(book);
   };

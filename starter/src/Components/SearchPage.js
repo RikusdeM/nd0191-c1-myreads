@@ -1,15 +1,29 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
+import * as lodash from "lodash";
 
-const SearchPage = () => {
+const SearchPage = ({ booksInShelf }) => {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([{}]);
 
+  const consolidatedBooks = (newBooks) => {
+    const booksOnShelf = lodash.intersectionBy(newBooks, booksInShelf, "id");
+    const booksNotOnShelf = lodash.differenceBy(newBooks, booksOnShelf, "id");
+
+    const booksFromTheShelf = booksOnShelf.map((bookToAdd) => {
+      return lodash.find(booksInShelf, ["id", bookToAdd.id]);
+    });
+
+    return [...booksFromTheShelf, ...booksNotOnShelf];
+  };
+
   const searchForBooks = () => {
     BooksAPI.search(query, 14)
-      .then((books) => setBooks(books))
+      .then((books) => {        
+        setBooks(consolidatedBooks(books));
+      })
       .finally(() => console.log("Search results have been updated"));
   };
 
@@ -23,10 +37,6 @@ const SearchPage = () => {
       }
     }
   };
-
-  console.log(books);
-  //   console.log(books.length);
-  //   console.log(books.authors)
 
   return (
     <div className="search-books">
