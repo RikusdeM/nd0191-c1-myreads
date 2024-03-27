@@ -15,7 +15,7 @@ export const bookCategories = {
 
 function App() {
   const [books, setBooks] = useState([{}]);
-  const [booksUpdated, setBooksUpdated] = useState(false);
+  const [, setBooksUpdated] = useState(false);
 
   useEffect(() => {
     BooksAPI.getAll()
@@ -84,14 +84,14 @@ function App() {
                 </div>
               </div>
               <div className="open-search">
-                <Link to={{ pathname: "/addBook" }}>Add a book</Link>
+                <Link to={{ pathname: "/search" }}>Add a book</Link>
               </div>
             </div>
           }
         />
         <Route
           exact
-          path="/addBook"
+          path="/search"
           element={
             <SearchPage booksInShelf={books} updateBookShelf={addNewBook} />
           }

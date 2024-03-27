@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { bookCategories } from "../App";
 
 const BookSelector = ({ shelf, updateBookCategory }) => {
