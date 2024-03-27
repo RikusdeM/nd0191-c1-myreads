@@ -37,15 +37,10 @@ function App() {
     );
   };
 
-  const updateBooksState = (updatedBook) => {
-    //trigger re-render
-    setBooksUpdated((oldState) => !oldState);
-    //update backend
+  const updateBooksState = (updatedBook) => {    
+    setBooksUpdated((oldState) => !oldState);    
     updateBookBackend(updatedBook);
   };
-
-  console.log("all books");
-  console.log(books);
 
   return (
     <div className="app">
