@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
 import * as lodash from "lodash";
+import PropTypes from "prop-types";
 
 const SearchPage = ({ booksInShelf, updateBookShelf }) => {
   const [query, setQuery] = useState("");
@@ -85,5 +86,10 @@ const SearchPage = ({ booksInShelf, updateBookShelf }) => {
     </div>
   );
 };
+
+SearchPage.propTypes = {
+    updateBookShelf: PropTypes.func.isRequired,
+    booksInShelf: PropTypes.array.isRequired,
+  };
 
 export default SearchPage;

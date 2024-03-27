@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { bookCategories } from "../App";
+import PropTypes from "prop-types";
 
 const BookSelector = ({ shelf, updateBookCategory }) => {
   const [shelfState, setShelfState] = useState("");
@@ -29,6 +30,11 @@ const BookSelector = ({ shelf, updateBookCategory }) => {
       </select>
     </div>
   );
+};
+
+BookSelector.propTypes = {
+  shelf: PropTypes.string.isRequired,  
+  updateBookCategory: PropTypes.func.isRequired,
 };
 
 export default BookSelector;

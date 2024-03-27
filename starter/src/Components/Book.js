@@ -3,7 +3,6 @@ import BookSelector from "./BookSelector";
 import PropTypes from "prop-types";
 
 const Book = ({ book, updateShelf }) => {
-  // console.log("book: " + JSON.stringify(book));
   const imageLink = () => {
     try {
       if (book.imageLinks.thumbnail) {
@@ -14,7 +13,7 @@ const Book = ({ book, updateShelf }) => {
     }
   };
 
-  const updateBook = (category) => {    
+  const updateBook = (category) => {
     book.shelf = category; //pointer operation
     updateShelf(book);
   };
@@ -60,8 +59,13 @@ const Book = ({ book, updateShelf }) => {
   );
 };
 
-// Book.propTypes = {
-//   book: PropTypes.array.isRequired,
-// };
+Book.propTypes = {
+  book: PropTypes.shape({
+    imageLinks: PropTypes.object,
+    title: PropTypes.string,
+    authors: PropTypes.array,
+  }).isRequired,
+  updateShelf: PropTypes.func.isRequired,
+};
 
 export default Book;
