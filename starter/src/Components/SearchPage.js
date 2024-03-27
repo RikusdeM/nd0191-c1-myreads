@@ -4,7 +4,7 @@ import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
 import * as lodash from "lodash";
 
-const SearchPage = ({ booksInShelf }) => {
+const SearchPage = ({ booksInShelf, updateBookShelf }) => {
   const [query, setQuery] = useState("");
   const [books, setBooks] = useState([{}]);
 
@@ -21,7 +21,9 @@ const SearchPage = ({ booksInShelf }) => {
 
   const searchForBooks = () => {
     BooksAPI.search(query, 14)
-      .then((books) => {        
+      .then((books) => {
+        console.log("search books");
+        console.log(books);
         setBooks(consolidatedBooks(books));
       })
       .finally(() => console.log("Search results have been updated"));
@@ -59,7 +61,7 @@ const SearchPage = ({ booksInShelf }) => {
           {books.length > 1
             ? books.map((book, index) => (
                 <li key={index}>
-                  <Book book={book} updateShelf={() => {}} />
+                  <Book book={book} updateShelf={updateBookShelf} />
                 </li>
               ))
             : "No search results found"}

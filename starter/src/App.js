@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import SearchPage from "./Components/SearchPage";
 import Bookshelf from "./Components/BookShelf";
 import * as BooksAPI from "./BooksAPI";
-import { Route, Routes, useNavigate, Link } from "react-router-dom";
+import * as lodash from "lodash";
+import { Route, Routes, Link } from "react-router-dom";
 
 export const bookCategories = {
   READ: "read",
@@ -13,8 +14,6 @@ export const bookCategories = {
 };
 
 function App() {
-  let navigate = useNavigate();
-
   const [books, setBooks] = useState([{}]);
   const [booksUpdated, setBooksUpdated] = useState(false);
 
@@ -24,17 +23,29 @@ function App() {
       .finally(() => console.log("Books have been loaded into state"));
   }, []);
 
-  const updateBooksState = (updatedBook) => {
-    //trigger re-render
+  const addNewBook = (updatedBook) => {
+    updateBookBackend(updatedBook);        
+    if (!lodash.includes(books, updatedBook)) {
+      setBooks((booksCollection) => [...booksCollection, updatedBook]);
+    }
     setBooksUpdated((oldState) => !oldState);
-    //update backend
+  };
+
+  const updateBookBackend = (updatedBook) => {
     BooksAPI.update(updatedBook, updatedBook.shelf).then((res) =>
       console.log(res)
     );
   };
 
+  const updateBooksState = (updatedBook) => {
+    //trigger re-render
+    setBooksUpdated((oldState) => !oldState);
+    //update backend
+    updateBookBackend(updatedBook);
+  };
+
   // console.log("all books");
-  // books.map((book) => console.log(book));
+  // console.log(books);
 
   return (
     <div className="app">
@@ -78,7 +89,13 @@ function App() {
             </div>
           }
         />
-        <Route exact path="/addBook" element={<SearchPage booksInShelf={books} />} />
+        <Route
+          exact
+          path="/addBook"
+          element={
+            <SearchPage booksInShelf={books} updateBookShelf={addNewBook} />
+          }
+        />
       </Routes>
     </div>
   );
