@@ -3,10 +3,7 @@ import { bookCategories } from "../App";
 import PropTypes from "prop-types";
 
 const BookSelector = ({ shelf, updateBookCategory }) => {
-  const [shelfState, setShelfState] = useState("");
-
   const onCategoryChange = (category) => {
-    setShelfState(category);
     updateBookCategory(category);
   };
 
@@ -14,7 +11,7 @@ const BookSelector = ({ shelf, updateBookCategory }) => {
     <div className="book-shelf-changer">
       <select
         name="bookshelfSelector"
-        value={shelfState === "" ? shelf : shelfState}
+        value={shelf}
         defaultChecked={true}
         onChange={(e) => onCategoryChange(e.target.value)}
       >
@@ -22,18 +19,28 @@ const BookSelector = ({ shelf, updateBookCategory }) => {
           Move to...
         </option>
         <option value={bookCategories.CURRENTLY_READING}>
+          {shelf === bookCategories.CURRENTLY_READING ? "✓ " : ""}
           Currently Reading
         </option>
-        <option value={bookCategories.WANT_TO_READ}>Want to Read</option>
-        <option value={bookCategories.READ}>Read</option>
-        <option value={bookCategories.NONE}>None</option>
+        <option value={bookCategories.WANT_TO_READ}>
+          {shelf === bookCategories.WANT_TO_READ ? "✓ " : ""}
+          Want to Read
+        </option>
+        <option value={bookCategories.READ}>
+          {shelf === bookCategories.READ ? "✓ " : ""}
+          Read
+        </option>
+        <option value={bookCategories.NONE}>
+          {shelf === bookCategories.NONE ? "✓ " : ""}
+          None
+        </option>
       </select>
     </div>
   );
 };
 
 BookSelector.propTypes = {
-  shelf: PropTypes.string.isRequired,  
+  shelf: PropTypes.string.isRequired,
   updateBookCategory: PropTypes.func.isRequired,
 };
 
