@@ -8,8 +8,8 @@ import { Route, Routes, Link } from "react-router-dom";
 
 export const bookCategories = {
   READ: "read",
-  WANTTOREAD: "wantToRead",
-  CURRENTLYREADING: "currentlyReading",
+  WANT_TO_READ: "wantToRead",
+  CURRENTLY_READING: "currentlyReading",
   NONE: "none",
 };
 
@@ -58,14 +58,14 @@ function App() {
                   <Bookshelf
                     title={"Currently Reading"}
                     books={books.filter(
-                      (book) => book.shelf === bookCategories.CURRENTLYREADING
+                      (book) => book.shelf === bookCategories.CURRENTLY_READING
                     )}
                     updateBooksCollection={updateBooksState}
                   />
                   <Bookshelf
                     title={"Want to Read"}
                     books={books.filter(
-                      (book) => book.shelf === bookCategories.WANTTOREAD
+                      (book) => book.shelf === bookCategories.WANT_TO_READ
                     )}
                     updateBooksCollection={updateBooksState}
                   />

@@ -21,10 +21,10 @@ const BookSelector = ({ shelf, updateBookCategory }) => {
         <option value="none" disabled>
           Move to...
         </option>
-        <option value={bookCategories.CURRENTLYREADING}>
+        <option value={bookCategories.CURRENTLY_READING}>
           Currently Reading
         </option>
-        <option value={bookCategories.WANTTOREAD}>Want to Read</option>
+        <option value={bookCategories.WANT_TO_READ}>Want to Read</option>
         <option value={bookCategories.READ}>Read</option>
         <option value={bookCategories.NONE}>None</option>
       </select>
