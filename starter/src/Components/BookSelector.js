@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { bookCategories } from "../App";
 import PropTypes from "prop-types";
 
